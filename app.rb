@@ -40,6 +40,11 @@ post '/visit' do
 	file_users.close
 
 	erb :message
+
+	if @user_name = ""
+		@error = "Введите Ваше имя"
+		erb :visit
+	end
 end
 
 post '/contacts' do
