@@ -32,6 +32,26 @@ post '/visit' do
 	@specialist = params[:specialist]
 	@color      = params[:color]
 
+	# хеш
+	hh = { :user_name  => 'Введите Ваше имя',
+		   :phone     => 'Введите номер Вашего телефона',
+		   :date_time => 'Введите дату и время' }
+
+	# для каждой пары ключ-значение
+	hh.each do |key, value|
+
+		# если параметр пуст
+		if params[key] == ''
+			# переменной error присвоить value из хеша hh
+			# (а value из хеша hh - это сообщение об ошибке)
+			# т.е. переменной error присвоить сообщение об ошибке
+			@error = hh[key]
+
+			# вернуть представление visit
+			return erb :visit
+		end
+	end
+
 	@title = "Спасибо за Ваш выбор, #{@user_name}!"
 	@message = "Ваш парикмахер #{@specialist} будет ждать Вас #{@date_time}!"
 
@@ -40,22 +60,6 @@ post '/visit' do
 	file_users.close
 
 	erb :message
-
-	if @user_name = ""
-		@error = "Введите Ваше имя"
-	end
-
-	if @phone = ""
-		@error = "Введите Ваше телефон"
-	end
-
-	if @date_time = ""
-		@error = "Неправильные дата и время"
-	end
-
-	if @error != ""
-		erb :visit
-	end
 end
 
 post '/contacts' do
