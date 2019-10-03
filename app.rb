@@ -74,6 +74,15 @@ post '/contacts' do
 	@email        = params[:email]
 	@user_message = params[:user_message]
 
+	hh = { :email        => 'Введите Ваш емайл',
+		   :user_message => 'Введите Ваше сообщение' }
+
+		@error = hh.select {|key,_| params[key] == ""}.values.join(", ")
+
+		if @error != ''
+			return erb :contacts
+		end
+
 	@title = "Большое спасибо!"
 	@message = "<h4>Ваше сообщение очень важно для нас!</h4>
 	            <h4>Мы не передаём информацию третьим лицам!</h4>"
